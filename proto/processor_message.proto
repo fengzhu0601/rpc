@@ -1,5 +1,19 @@
 syntax = "proto3";
 
+import "memory_message.proto";
+
+
+// fengzhu@FM143SKT30YILNL:~/go-packer/rpc$ make gen
+// protoc --proto_path=proto proto/*.proto --go_out=plugins=grpc:pb
+// 2022/09/23 02:30:08 protoc-gen-go: error:inconsistent package names: memory_message, processor_message
+// --go_out: protoc-gen-go: Plugin failed with status code 1.
+// make: *** [Makefile:2: gen] Error 1
+// 解决办法：设置成同一个包名
+package rpc;
+
+// 将rpc包名改为pb
+option go_package = "pb";
+
 message CPU {
   string brand = 1;
   string name = 2;
@@ -7,4 +21,12 @@ message CPU {
   uint32 number_threads = 4;
   double min_ghz = 5;
   double max_ghz = 6;
+}
+
+message GPU{
+  string brand = 1;
+  string name = 2;
+  double min_ghz = 3;
+  double max_ghz = 4;
+  Memory memory = 5;
 }
